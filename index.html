@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSANZ GLOBAL - XsanzVip EXECUTIVE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&family=Noto+Sans+Arabic:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root { --chrome: linear-gradient(90deg, #fff, #888, #fff); --tg-blue: #0088cc; }
+        body { background: #000; color: #fff; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        .silver-header { background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(25px); border-bottom: 2px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; padding: 20px; text-align: center; }
+        .silver-text { background: var(--chrome); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
+        .promo-card { background: #080808; border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; padding: 25px; margin: 20px; box-shadow: 0 15px 40px rgba(0,0,0,1); }
+        .btn-copy { background: #fff; color: #000; width: 100%; padding: 18px; border-radius: 15px; font-weight: 900; font-size: 13px; margin-top: 15px; text-transform: uppercase; cursor: pointer; transition: 0.2s; }
+        .p-text { white-space: pre-line; font-size: 14px; line-height: 1.8; color: #f0f0f0; font-family: 'Noto Sans Arabic', 'Courier New', sans-serif; }
+        #temp-copy { position: absolute; left: -9999px; top: 0; }
+        
+        #floating-video-container {
+            display: none; position: fixed; bottom: 100px; left: 20px;
+            width: 180px; background: #111; border: 2px solid #fff;
+            border-radius: 15px; overflow: hidden; z-index: 300;
+        }
+        .ai-loading { display: none; font-size: 10px; color: #888; margin-bottom: 10px; font-style: italic; }
+    </style>
+</head>
+<body onload="renderPromos()">
+
+    <textarea id="temp-copy"></textarea>
+
+    <div id="floating-video-container">
+        <div class="bg-zinc-900 p-2 text-[10px] flex justify-between items-center border-b border-zinc-800">
+            <span class="font-black italic text-white">TUTORIAL XSANZ</span>
+            <button onclick="closeVideo()" class="text-white px-1 font-bold">✕</button>
+        </div>
+        <video id="tutor-video" width="100%" controls>
+            <source src="https://files.catbox.moe/upw48w.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="silver-header">
+        <h1 class="silver-text text-4xl italic">XsanzVip</h1>
+        <p class="text-[8px] tracking-[8px] text-zinc-500 uppercase mt-2">Chaos Factory - Pro Dashboard</p>
+    </div>
+
+    <div id="promo-container" class="max-w-2xl mx-auto pb-32">
+        <div class="promo-card" style="border: 1px solid var(--tg-blue); background: linear-gradient(145deg, #050505, #001a2e);">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-[#0088cc] rounded-full flex items-center justify-center text-white">
+                    <svg viewBox="0 0 24 24" class="w-7 h-7 fill-current"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.52-1.4.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.45-.42-1.39-.89.03-.25.38-.51 1.07-.78 4.2-1.82 7-3.03 8.4-3.61 4-.1.83.1.91.1.18.01.59.08.86.31.23.19.3.45.32.64.03.11.01.24 0 .33z"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-[#0088cc]">OFFICIAL GROUP</h3>
+            </div>
+            <p class="text-center text-white font-black text-[11px] mb-3 tracking-tighter uppercase italic py-2 border-y border-white/10">TEKS BAND WHATSAPP YANG LANGSUNG PERMANEN MASUK GRUP</p>
+            <div class="flex flex-col gap-2">
+                <button onclick="playTutor()" class="w-full bg-white text-black py-4 rounded-xl font-black uppercase text-sm italic">📖 LIHAT TUTORIAL</button>
+                <button onclick="window.open('https://t.me/+QQEkuBtsV2s2MTQ1', '_blank')" class="w-full bg-[#0088cc] text-white py-4 rounded-xl font-black uppercase text-sm">JOIN TELEGRAM GRUP</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-menu" class="fixed bottom-6 right-6 z-[200]">
+        <button onclick="toggleHelp()" class="bg-white text-black w-16 h-16 rounded-2xl font-black shadow-2xl flex items-center justify-center border-2 border-zinc-800">💬</button>
+        <div id="help-box" class="hidden absolute bottom-20 right-0 w-[330px] bg-[#0f0f0f] border border-zinc-800 rounded-[25px] shadow-2xl overflow-hidden backdrop-blur-xl">
+            <div class="bg-zinc-900 p-4 border-b border-zinc-800 flex justify-between items-center">
+                <h2 class="silver-text font-black uppercase text-sm">XSANZ AI SUPPORT</h2>
+                <button onclick="toggleHelp()" class="text-zinc-500 text-xs">✕</button>
+            </div>
+            <div class="p-4 h-[280px] overflow-y-auto space-y-3 flex flex-col" id="chat-body">
+                <div class="bg-zinc-800 p-3 rounded-xl rounded-bl-none text-[11px]">Selamat datang di layanan eksekutif XSANZ. Silakan ajukan pertanyaan Anda.</div>
+            </div>
+            <div id="ai-loading" class="px-4 ai-loading">AI sedang merespon laporan...</div>
+            <div class="p-3 bg-zinc-900 border-t border-zinc-800 flex gap-2">
+                <input type="text" id="app-input" placeholder="Tulis pesan resmi..." class="flex-1 bg-black border border-zinc-700 rounded-lg px-3 py-2 text-[11px] text-white outline-none">
+                <button onclick="handleChat()" id="btn-send" class="bg-white text-black px-4 py-2 rounded-lg font-bold text-[11px]">SEND</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TOKEN = "8238786234:AAGPi_Hc9aGf6BsOouSudW_e9jdUGOphnd8";
+        const CHAT_ID = "7771486986";
+
+        async function handleChat() {
+            const input = document.getElementById('app-input');
+            const chatBody = document.getElementById('chat-body');
+            const loader = document.getElementById('ai-loading');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            chatBody.innerHTML += `<div class="flex flex-col items-end"><div class="bg-white text-black p-3 rounded-xl rounded-br-none text-[11px] font-bold shadow-lg">${msg}</div></div>`;
+            input.value = "";
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // FORMAT LAPORAN SEPERTI SURAT KANTOR BESAR
+            const time = new Date().toLocaleString('id-ID');
+            const officialReport = `
+🏢 *XSANZ GLOBAL ADMINISTRATION*
+━━━━━━━━━━━━━━━━━━━━━━━━
+*LAPORAN KOMUNIKASI PELANGGAN*
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+*NO. REF:* X-VIP/${Date.now()}
+*WAKTU:* ${time}
+*SUMBER:* Web-Dashboard Terminal
+
+*DETAIL PESAN:*
+_"${msg}"_
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+*STATUS:* DISAMPAIKAN KE ADMIN
+*VERIFIKASI:* SISTEM XSANZ BEACON ✅
+━━━━━━━━━━━━━━━━━━━━━━━━
+            `;
+
+            new Image().src = `https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(officialReport)}&parse_mode=Markdown`;
+
+            loader.style.display = "block";
+            try {
+                const aiRes = await fetch("https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill", {
+                    method: "POST",
+                    body: JSON.stringify({ inputs: msg })
+                });
+                const data = await aiRes.json();
+                const reply = data[0]?.generated_text || "Mohon maaf, sistem AI kami sedang dalam pemeliharaan. Harap menunggu respon admin.";
+                
+                loader.style.display = "none";
+                chatBody.innerHTML += `<div class="flex flex-col items-start"><div class="bg-zinc-700 text-white p-3 rounded-xl rounded-bl-none text-[11px] shadow-lg border border-zinc-600"><b>AI EXECUTIVE:</b><br>${reply}</div></div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            } catch (err) { loader.style.display = "none"; }
+        }
+
+        // --- DATA PROMOSI (TETAP ASLI) ---
+        const emojiPool = ["👑","🎰","💎","🔥","🚀","💰","💸","🎯","⚡","🧨","💣","🎲","🤑","🥇","🏆","🦍","🐉","🦁","🐍","🏎️","🚁","🛸","🌀","🧿","🔮","🔱","🇮🇩","🇸🇦","🇧🇷","🇺🇸","🇷🇺","🇹🇭","🇯🇵","🇰🇷","🇰🇷","🇻🇳","🇬🇷","🌍","💥","✨","🔞","🔱","🔔"];
+        const urls = [
+            "https://mindsaludmental.com/blog-2/", "https://win-2parkirslot.site//?Ref=SmDPwgPZ",
+            "https://bcgame54.com/id/", "https://www.forbesforjustice.com/about",
+            "https://asikseru.site/register?referral_code=heyasik", "https://daftar-12harum777.xyz/register/0KPD67BK"
+        ];
+        const languages = [
+            { h: "اِربَح اَلمَالَ اَلآنَ سَرِيعاً", b: "إِيدَاعٌ بَسِيطٌ وَسَحبٌ كَبِيرٌ", d: "ثَروَةٌ هَائِلَةٌ فِي اِنتِظَارِك", s: "اَلمَوقِعُ اَلرَّسمِيُّ" },
+            { h: "今すぐ大金を稼ぎましょう", b: "少額のデポジットで高額の引き出し", d: "明日에는 고급차가 당신의 것이 될 것입니다", s: "公式サイト" },
+            { h: "БЫСТРЫЙ ЗАРАБОТОК ДЕНЕГ", b: "МИНИМАЛЬНЫЙ ДЕПОЗИТ $5", d: "БОГАТСТВО ЖДЕТ ВΑΣ ЗАВΤΡΑ", s: "ОФИЦИАЛЬНЫЙ САЙΤ" },
+            { h: "รับเงินเร็ววันนี้ ทันใจ", b: "ฝากน้อย ถอนหลักหมื่น แจกจริง", d: "เป็นเศรษฐีใหม่ในข้ามคืน", s: "ทางเข้าเล่นหลัก" },
+            { h: "지금 빠르게 돈을 버세요", b: "적은 예금으로 큰 수익을 얻으세요", d: "내일 당신은 부자가 될 것입니다", s: "공식 홈페이지" },
+            { h: "ΚΕΡΔΙΣΤΕ ΓΡΗΓΟΡΑ ΧΡΗΜΑΤΑ", b: "ΚΑΤΑΘΕΣΤΕ 5€ ΚΑΙ ΚΕΡΔΙΣΤΕ 500€", d: "Η ΤΥΧΗ ΣΑΣ ΕΙΝΑΙ ΕΔΩ", s: "ΕΠΙΣΗΜΟΣ ΙΣΤΟΤΟΠΟΣ" }
+        ];
+
+        function getRndEmo(count) {
+            let res = "";
+            for(let i=0; i<count; i++) res += emojiPool[Math.floor(Math.random()*emojiPool.length)];
+            return res;
+        }
+
+        function renderPromos() {
+            const container = document.getElementById('promo-container');
+            let content = container.innerHTML;
+            for (let i = 1; i <= 50; i++) {
+                const l = languages[Math.floor(Math.random() * languages.length)];
+                const u = urls[Math.floor(Math.random() * urls.length)];
+                const txt = `${getRndEmo(3)} ${l.h} ${getRndEmo(2)}\n${getRndEmo(1)} ${l.b}\n${getRndEmo(1)} TIP: TOTO100 SLOT ${getRndEmo(1)}\n${getRndEmo(1)} GIRO ${Math.floor(Math.random()*60)}X ➜ SCATTER\n${getRndEmo(1)} MAXWIN ${i}/01/2026 ${getRndEmo(2)}\n\n📌 ${l.s}: ${u}\n➡️ ${u}\n\n⚡ FEATURES:\n✅ FAST WD ${getRndEmo(1)}\n✅ RTP 99.9% LIVE\n✅ ACC: ALL LOCAL & GLOBAL BANK\n\n${getRndEmo(2)} GLOBAL POLA ${getRndEmo(2)}\nAUTO ${Math.floor(Math.random()*100)}X ➜ TURBO ON\n⚠️ BIG WIN DETECTED!!\n\n📲 ${l.d}! ${getRndEmo(4)}`;
+                content += `<div class="promo-card"><div class="p-text" id="p-${i}">${txt}</div><button class="btn-copy" onclick="doCopy(${i})">SALIN TEKS #${i}</button></div>`;
+            }
+            container.innerHTML = content;
+        }
+
+        function playTutor() { document.getElementById('floating-video-container').style.display='block'; document.getElementById('tutor-video').play(); }
+        function closeVideo() { document.getElementById('floating-video-container').style.display='none'; document.getElementById('tutor-video').pause(); }
+        function toggleHelp() { document.getElementById('help-box').classList.toggle('hidden'); }
+        function doCopy(id) {
+            const textToCopy = document.getElementById(`p-${id}`).innerText;
+            const tempTextArea = document.getElementById('temp-copy');
+            tempTextArea.value = textToCopy;
+            tempTextArea.select();
+            document.execCommand('copy');
+            alert("TEKS BERHASIL DISALIN!");
+        }
+    </script>
+</body>
+</html>
