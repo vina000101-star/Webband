@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JASA TEBAR | ULTRA-WIDE PANEL</title>
+    <title>JASA TEBAR | ULTRA-WIDE PANEL | XSANZ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -16,11 +16,16 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background: var(--bg-dark); color: var(--text-main); display: flex; height: 100vh; width: 100vw; overflow: hidden; }
 
-        /* SIDEBAR SISTEM */
+        .info-header {
+            background: rgba(255, 68, 68, 0.1); border-bottom: 1px solid #ff4444;
+            padding: 12px; text-align: center; color: #ff4444; font-weight: 700;
+            font-size: 0.9rem; position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+        }
+
         aside {
             width: 260px; background: var(--card-bg); border-right: 1px solid var(--border);
             display: flex; flex-direction: column; padding: 25px 15px; flex-shrink: 0;
-            transition: all 0.3s ease; z-index: 1000;
+            transition: all 0.3s ease; z-index: 1000; margin-top: 45px;
         }
         aside.hidden { margin-left: -260px; }
 
@@ -30,77 +35,46 @@
         }
         .nav-link.active { background: rgba(0, 212, 255, 0.1); color: var(--primary); }
 
-        /* TOGGLE FLOATING BUTTON */
         .toggle-menu {
-            position: fixed; left: 15px; top: 15px; z-index: 1100;
+            position: fixed; left: 15px; top: 60px; z-index: 1100;
             width: 40px; height: 40px; background: var(--card-bg); border: 1px solid var(--border);
             border-radius: 10px; color: var(--primary); display: flex; align-items: center; justify-content: center;
             cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        /* MAIN CONTENT AREA - FULL SCREEN READY */
-        main { flex-grow: 1; overflow-y: auto; background: #06090f; display: flex; flex-direction: column; }
-        
-        .container-fluid {
-            width: 100%;
-            max-width: 1400px; /* Diperlebar signifikan */
-            margin: 0 auto;
-            padding: 70px 30px 40px 30px;
-        }
-
+        main { flex-grow: 1; overflow-y: auto; background: #06090f; display: flex; flex-direction: column; padding-top: 45px; }
+        .container-fluid { width: 100%; max-width: 1400px; margin: 0 auto; padding: 40px 30px; }
         .page { display: none; }
         .page.active { display: block; }
 
-        /* CARD FULL WIDTH */
-        .card-full {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 35px;
-            margin-bottom: 25px;
-            width: 100%;
-        }
-
+        .card-full { background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; padding: 35px; margin-bottom: 25px; width: 100%; }
         .section-title { font-size: 0.8rem; font-weight: 800; color: var(--primary); letter-spacing: 1px; margin-bottom: 20px; text-transform: uppercase; }
 
-        /* INPUT AREA */
-        .upload-wide {
-            border: 2px dashed var(--border); border-radius: 20px; padding: 40px;
-            text-align: center; cursor: pointer; background: rgba(255,255,255,0.01); transition: 0.3s;
-        }
+        .upload-wide { border: 2px dashed var(--border); border-radius: 20px; padding: 40px; text-align: center; cursor: pointer; background: rgba(255,255,255,0.01); transition: 0.3s; }
         .upload-wide:hover { border-color: var(--primary); background: rgba(0, 212, 255, 0.03); }
 
-        textarea.wide-editor {
-            width: 100%; min-height: 200px; padding: 25px; background: #000; 
-            border: 1px solid var(--border); border-radius: 20px; color: #fff;
-            margin-top: 20px; font-size: 1rem; line-height: 1.6; outline: none; transition: 0.3s;
-        }
-        textarea.wide-editor:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(0, 212, 255, 0.1); }
-
-        /* ACTION BUTTONS */
+        textarea.wide-editor { width: 100%; min-height: 200px; padding: 25px; background: #000; border: 1px solid var(--border); border-radius: 20px; color: #fff; margin-top: 20px; font-size: 1rem; line-height: 1.6; outline: none; }
         .action-group { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-top: 20px; }
         .btn-main { padding: 20px; border-radius: 16px; border: none; font-weight: 800; cursor: pointer; font-size: 1rem; transition: 0.3s; }
         .btn-launch { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #fff; }
         .btn-auto { background: #090c12; color: #00ffaa; border: 1px solid #00ffaa; }
         .btn-auto.active { background: #00ffaa; color: #000; }
 
-        /* CONSOLE WIDE */
-        .console-wide {
-            background: #000; border-radius: 20px; padding: 20px;
-            font-family: 'Consolas', monospace; font-size: 0.85rem;
-            height: 300px; overflow-y: auto; border: 1px solid var(--border); color: #0f0;
-        }
-
-        /* HISTORY TABLE FULL */
+        .console-wide { background: #000; border-radius: 20px; padding: 20px; font-family: 'Consolas', monospace; font-size: 0.85rem; height: 300px; overflow-y: auto; border: 1px solid var(--border); color: #0f0; }
         .table-responsive { width: 100%; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; }
         th { text-align: left; padding: 15px; color: var(--primary); border-bottom: 2px solid var(--border); }
         td { padding: 15px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
-
         input[type="file"] { display: none; }
+        
+        #countdown-timer { font-family: monospace; font-weight: bold; color: #00ffaa; margin-top: 5px; font-size: 0.8rem; text-align: center; display: block; }
     </style>
 </head>
 <body>
+
+<div class="info-header">
+    <i class="fas fa-exclamation-triangle"></i> JIKA PESAN TIDAK MASUK: WAJIB KETIK /start DI DALAM GRUP ATAU CHAT PRIBADI BOT TERLEBIH DAHULU!
+</div>
 
 <div class="toggle-menu" onclick="toggleSidebar()">
     <i class="fas fa-bars"></i>
@@ -124,23 +98,30 @@
                 <div class="upload-wide" onclick="document.getElementById('fileInp').click()">
                     <i class="fas fa-file-upload" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
                     <h3 id="fileText">Klik untuk Upload Gambar/Video Promosi</h3>
-                    <p style="color: var(--text-dim); margin-top: 5px;">File akan dikirim sebagai media utama broadcast</p>
+                    <p style="color: var(--text-dim); margin-top: 5px;">File media utama broadcast</p>
                 </div>
                 <input type="file" id="fileInp" accept="image/*,video/*" onchange="document.getElementById('fileText').innerText = 'READY: ' + this.files[0].name">
+                
+                <div style="width:100%; background:#000; color:#00ffaa; border:1px solid var(--border); margin-top:15px; padding:15px; border-radius:12px; font-family:monospace; font-size:0.8rem;">
+                    LOCKED APK: https://www.mediafire.com/file/5rsolqaynt1ye8g/APK+JESEB+V2.apk/file
+                </div>
                 
                 <textarea id="caption" class="wide-editor" placeholder="Tulis caption marketing lo di sini (Support HTML)..."></textarea>
                 
                 <div class="action-group">
                     <button class="btn-main btn-launch" onclick="launch()"><i class="fas fa-paper-plane"></i> LUNCURKAN KE TARGET DATABASE</button>
-                    <button id="autoBtn" class="btn-main btn-auto" onclick="toggleAuto()"><i class="fas fa-sync-alt"></i> MODE AUTO-PILOT (5m)</button>
+                    <div>
+                        <button id="autoBtn" class="btn-main btn-auto" style="width: 100%;" onclick="toggleAuto()"><i class="fas fa-sync-alt"></i> MODE AUTO-JEDA (3m)</button>
+                        <span id="countdown-timer"></span>
+                    </div>
                 </div>
             </div>
 
             <div class="card-full">
-                <div class="section-title">Step 2: Monitoring System</div>
+                <div class="section-title">Step 2: Monitoring System & Auto-Responder</div>
                 <div id="logs" class="console-wide">
                     <div>[SYSTEM] Ultra-Wide Interface Initialized...</div>
-                    <div style="color: #555;">[IDLE] Awaiting command from deployer XSANZ.</div>
+                    <div id="db-count" style="color: #00d4ff;">[DATABASE] Loaded Targets: 0</div>
                 </div>
             </div>
         </div>
@@ -167,14 +148,20 @@
 </main>
 
 <script>
-    const TOKEN = "8343433110:AAFxN1Lb6t15KWeVcxtVZUkK0lfoxI3_YLc";
+    const TOKEN = "8248357082:AAHSIbZaaw-GI-aSr_uKBy8fVa5Mhs_awDA";
+    const APK_FIXED = "https://www.mediafire.com/file/5rsolqaynt1ye8g/APK+JESEB+V2.apk/file";
+    const SUCCESS_TEXT = "🙌SELAMAT KAKA SUDAH MENDAPATKAN APK JASEB V2🙌";
+    const FAIL_TEXT = "<b>[MAAF KAK SYARAT BELUM DI PENUHI]</b>\n\nSilakan masukkan bot ke 2 grup dengan member 9+ baru klik DONE!";
+    
+    // DATABASE TARGET (Auto-Save selama tab terbuka)
+    let targetDatabase = new Set();
+    let lastUpdateId = 0;
     let autoActive = false;
     let autoInterval = null;
+    let countdownInterval = null;
+    let remainingTime = 180;
 
-    function toggleSidebar() {
-        document.getElementById('sidebar').classList.toggle('hidden');
-    }
-
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('hidden'); }
     function switchPage(pageId, element) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
@@ -187,76 +174,177 @@
         const logs = document.getElementById('logs');
         logs.innerHTML += `<div style="color: ${color}">[${time}] ${msg}</div>`;
         logs.scrollTop = logs.scrollHeight;
+        document.getElementById('db-count').innerText = `[DATABASE] Loaded Targets: ${targetDatabase.size}`;
     }
 
     function addHistory(id, status, type) {
         const table = document.querySelector('#historyTable tbody');
-        const row = `<tr>
-            <td>${new Date().toLocaleString()}</td>
-            <td>${id}</td>
-            <td style="color:${status === 'OK' ? '#00ffaa' : '#ff4444'}">${status}</td>
-            <td>${type}</td>
-        </tr>`;
+        const row = `<tr><td>${new Date().toLocaleString()}</td><td>${id}</td><td style="color:${status === 'OK' ? '#00ffaa' : '#ff4444'}">${status}</td><td>${type}</td></tr>`;
         table.insertAdjacentHTML('afterbegin', row);
     }
 
-    async function launch() {
-        const file = document.getElementById('fileInp').files[0];
-        const caption = document.getElementById('caption').value;
-        if(!caption) return alert("Pesan tidak boleh kosong!");
+    // LISTENER UTAMA & AUTO DATABASE
+    async function botListener() {
+        try {
+            const res = await fetch(`https://api.telegram.org/bot${TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=30`);
+            const data = await res.json();
+            if(data.ok && data.result.length > 0) {
+                for(let u of data.result) {
+                    lastUpdateId = u.update_id;
+                    const msg = u.message;
+                    const cb = u.callback_query;
+                    const chatMember = u.my_chat_member;
 
-        writeLog("Mengakses database Telegram API...", "yellow");
+                    // AUTO SAVE TARGET ID
+                    const potentialId = msg?.chat.id || cb?.from.id || chatMember?.chat.id;
+                    if(potentialId) targetDatabase.add(potentialId);
+
+                    if(msg && msg.text === '/start') {
+                        writeLog(`[INCOMING] /start detect dari ${msg.chat.id}`, "cyan");
+                        sendInstruction(msg.chat.id);
+                    }
+                    if(cb && cb.data === 'verify_grup') {
+                        verifyGrup(cb);
+                    }
+                }
+            }
+        } catch(e) {}
+        setTimeout(botListener, 1500);
+    }
+
+    async function sendInstruction(chatId) {
+        const text = "<b>⚠️ AKSES TERBATAS!</b>\n\nSilakan masukkan Bot ini ke <b>2 GRUP</b> yang berbeda dengan member <b>DI ATAS 9 ORANG</b>.\n\nJika sudah, silakan klik tombol <b>DONE</b> di bawah untuk mendapatkan link APK Control.";
+        const kb = { inline_keyboard: [[{ text: "✅ DONE", callback_data: "verify_grup" }]] };
+        await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: 'HTML', reply_markup: kb })
+        });
+    }
+
+    async function verifyGrup(cb) {
+        const chatId = cb.from.id;
+        writeLog(`[VERIFY] Mengecek grup untuk User: ${chatId}...`, "yellow");
+        
         try {
             const res = await fetch(`https://api.telegram.org/bot${TOKEN}/getUpdates`);
             const data = await res.json();
-            const ids = [...new Set(data.result.map(u => u.message?.chat.id || u.my_chat_member?.chat.id).filter(id => id))];
+            let validGroups = [];
+            const seen = new Set();
 
-            if(ids.length === 0) return writeLog("CRITICAL: Target tidak ditemukan!", "red");
+            if(data.ok) {
+                for(let u of data.result) {
+                    const chat = u.my_chat_member?.chat || u.message?.chat;
+                    if(chat && (chat.type === 'group' || chat.type === 'supergroup') && !seen.has(chat.id)) {
+                        seen.add(chat.id);
+                        const countRes = await fetch(`https://api.telegram.org/bot${TOKEN}/getChatMemberCount?chat_id=${chat.id}`);
+                        const countData = await countRes.json();
+                        if(countData.ok && countData.result >= 9) validGroups.push(chat.id);
+                    }
+                }
+            }
 
-            writeLog(`Memulai gempuran ke ${ids.length} target...`, "cyan");
-            for(const id of ids) {
-                const fd = new FormData();
-                fd.append('chat_id', id);
-                fd.append('caption', caption);
-                fd.append('parse_mode', 'HTML');
-                
-                let method = file ? (file.type.startsWith('image/') ? "sendPhoto" : "sendVideo") : "sendMessage";
-                if(file) fd.append(file.type.startsWith('image/') ? 'photo' : 'video', file);
-                else fd.append('text', caption);
+            if(validGroups.length >= 2) {
+                const successMsg = `<b>[${SUCCESS_TEXT}]</b>\n\nLink APK Control:\n${APK_FIXED}`;
+                await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: chatId, text: successMsg, parse_mode: 'HTML' })
+                });
+                writeLog(`[SUCCESS] ${chatId} Lolos!`, "#00ffaa");
+            } else {
+                // PESAN GAGAL LANGSUNG KE CHAT
+                await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: chatId, text: FAIL_TEXT, parse_mode: 'HTML' })
+                });
+                await fetch(`https://api.telegram.org/bot${TOKEN}/answerCallbackQuery`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ callback_query_id: cb.id })
+                });
+                writeLog(`[REJECT] ${chatId} Syarat kurang!`, "red");
+            }
+        } catch(e) { writeLog("ERROR: " + e.message, "red"); }
+    }
 
+    // BROADCAST MENGGUNAKAN DATABASE YANG TERKUMPUL
+    async function launch() {
+        const file = document.getElementById('fileInp').files[0];
+        let baseCaption = document.getElementById('caption').value;
+        if(!baseCaption) return alert("Pesan kosong!");
+
+        // Jika database lokal kosong, coba ambil dari Updates terbaru
+        if(targetDatabase.size === 0) {
+            writeLog("Database kosong, mencoba fetch updates...", "yellow");
+            const res = await fetch(`https://api.telegram.org/bot${TOKEN}/getUpdates`);
+            const data = await res.json();
+            data.result.forEach(u => {
+                const id = u.message?.chat.id || u.my_chat_member?.chat.id;
+                if(id) targetDatabase.add(id);
+            });
+        }
+
+        const ids = Array.from(targetDatabase);
+        if(ids.length === 0) return writeLog("CRITICAL: Target tetap tidak ditemukan!", "red");
+
+        writeLog(`Memulai serangan ke ${ids.length} target...`, "cyan");
+        for(const id of ids) {
+            let finalCaption = baseCaption;
+            // Logika Mass Tag untuk Grup
+            if(id.toString().startsWith('-')) {
+                const admRes = await fetch(`https://api.telegram.org/bot${TOKEN}/getChatAdministrators?chat_id=${id}`);
+                const admData = await admRes.json();
+                if(admData.ok) {
+                    const tags = admData.result.map(a => `<a href="tg://user?id=${a.user.id}">\u200b</a>`).join('');
+                    finalCaption = tags + "📢 <b>MASS BROADCAST:</b>\n\n" + baseCaption;
+                }
+            }
+
+            const fd = new FormData();
+            fd.append('chat_id', id);
+            fd.append('caption', finalCaption);
+            fd.append('parse_mode', 'HTML');
+            
+            let method = file ? (file.type.startsWith('image/') ? "sendPhoto" : "sendVideo") : "sendMessage";
+            if(file) fd.append(file.type.startsWith('image/') ? 'photo' : 'video', file);
+            else fd.append('text', finalCaption);
+
+            try {
                 const send = await fetch(`https://api.telegram.org/bot${TOKEN}/${method}`, { method: 'POST', body: fd });
                 const result = await send.json();
-                
-                if(result.ok) {
-                    writeLog(`SUCCESS: Terkirim ke ${id}`, "#00ffaa");
-                    addHistory(id, 'OK', method);
-                } else {
-                    writeLog(`FAILED: ${id} - ${result.description}`, "red");
-                    addHistory(id, 'FAIL', method);
-                }
-                await new Promise(r => setTimeout(r, 800));
-            }
-            writeLog("BATCH SELESAI.", "#fff");
-        } catch(e) { writeLog("ERROR: " + e.message, "red"); }
+                if(result.ok) { writeLog(`OK: ${id}`, "#00ffaa"); addHistory(id, 'OK', method); }
+                else { writeLog(`FAIL: ${id}`, "red"); addHistory(id, 'FAIL', method); }
+            } catch(e) {}
+            await new Promise(r => setTimeout(r, 1000));
+        }
+        writeLog("Gempuran Selesai.", "#fff");
     }
 
     function toggleAuto() {
         const btn = document.getElementById('autoBtn');
+        const timerSpan = document.getElementById('countdown-timer');
         if(!autoActive) {
-            autoActive = true;
-            btn.classList.add('active');
+            autoActive = true; btn.classList.add('active');
             btn.innerHTML = `<i class="fas fa-pause"></i> STOP AUTO-PILOT`;
-            writeLog("MODE AUTO-PILOT AKTIF (Setiap 5 Menit)", "cyan");
-            launch();
-            autoInterval = setInterval(launch, 300000);
+            launch(); remainingTime = 180;
+            autoInterval = setInterval(launch, 180000);
+            countdownInterval = setInterval(() => {
+                remainingTime--;
+                let m = Math.floor(remainingTime / 60); let s = remainingTime % 60;
+                timerSpan.innerText = `NEXT BATCH: ${m}:${s < 10 ? '0'+s : s}`;
+                if(remainingTime <= 0) remainingTime = 180;
+            }, 1000);
         } else {
-            autoActive = false;
-            btn.classList.remove('active');
-            btn.innerHTML = `<i class="fas fa-sync-alt"></i> MODE AUTO-PILOT (5m)`;
-            clearInterval(autoInterval);
-            writeLog("MODE AUTO-PILOT DINONAKTIFKAN", "red");
+            autoActive = false; btn.classList.remove('active');
+            btn.innerHTML = `<i class="fas fa-sync-alt"></i> MODE AUTO-JEDA (3m)`;
+            clearInterval(autoInterval); clearInterval(countdownInterval);
+            timerSpan.innerText = "";
         }
     }
+
+    botListener();
 </script>
 
 </body>
