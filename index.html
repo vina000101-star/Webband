@@ -1,303 +1,173 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JASA TEBAR | ULTRA-WIDE PANEL | XSANZ</title>
+    <title>XSANZ - Master Controller</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #00d4ff; --secondary: #0055ff;
-            --bg-dark: #06090f; --card-bg: #11161d;
-            --border: #212833; --text-main: #ffffff; --text-dim: #94a3b8;
+        :root { 
+            --bg: #0f1721; --side: #17212b; --active: #2b5278; 
+            --text: #f5f5f5; --hint: #708499; --blue: #5288c1; 
+            --msg-in: #182533; --msg-out: #2b5278; --header: #17212b;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background: var(--bg); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg-dark); color: var(--text-main); display: flex; height: 100vh; width: 100vw; overflow: hidden; }
-
-        .info-header {
-            background: rgba(255, 68, 68, 0.1); border-bottom: 1px solid #ff4444;
-            padding: 12px; text-align: center; color: #ff4444; font-weight: 700;
-            font-size: 0.9rem; position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
-        }
-
-        aside {
-            width: 260px; background: var(--card-bg); border-right: 1px solid var(--border);
-            display: flex; flex-direction: column; padding: 25px 15px; flex-shrink: 0;
-            transition: all 0.3s ease; z-index: 1000; margin-top: 45px;
-        }
-        aside.hidden { margin-left: -260px; }
-
-        .nav-link {
-            display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 12px;
-            color: var(--text-dim); text-decoration: none; margin-bottom: 8px; transition: 0.3s; font-weight: 600; cursor: pointer;
-        }
-        .nav-link.active { background: rgba(0, 212, 255, 0.1); color: var(--primary); }
-
-        .toggle-menu {
-            position: fixed; left: 15px; top: 60px; z-index: 1100;
-            width: 40px; height: 40px; background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 10px; color: var(--primary); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        main { flex-grow: 1; overflow-y: auto; background: #06090f; display: flex; flex-direction: column; padding-top: 45px; }
-        .container-fluid { width: 100%; max-width: 1400px; margin: 0 auto; padding: 40px 30px; }
-        .page { display: none; }
-        .page.active { display: block; }
-
-        .card-full { background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; padding: 35px; margin-bottom: 25px; width: 100%; }
-        .section-title { font-size: 0.8rem; font-weight: 800; color: var(--primary); letter-spacing: 1px; margin-bottom: 20px; text-transform: uppercase; }
-
-        .upload-wide { border: 2px dashed var(--border); border-radius: 20px; padding: 40px; text-align: center; cursor: pointer; background: rgba(255,255,255,0.01); transition: 0.3s; }
-        .upload-wide:hover { border-color: var(--primary); background: rgba(0, 212, 255, 0.03); }
-
-        textarea.wide-editor { width: 100%; min-height: 200px; padding: 25px; background: #000; border: 1px solid var(--border); border-radius: 20px; color: #fff; margin-top: 20px; font-size: 1rem; line-height: 1.6; outline: none; }
-        .action-group { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-top: 20px; }
-        .btn-main { padding: 20px; border-radius: 16px; border: none; font-weight: 800; cursor: pointer; font-size: 1rem; transition: 0.3s; }
-        .btn-launch { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #fff; }
-        .btn-auto { background: #090c12; color: #00ffaa; border: 1px solid #00ffaa; }
-        .btn-auto.active { background: #00ffaa; color: #000; }
-
-        .console-wide { background: #000; border-radius: 20px; padding: 20px; font-family: 'Consolas', monospace; font-size: 0.85rem; height: 300px; overflow-y: auto; border: 1px solid var(--border); color: #0f0; }
-        .table-responsive { width: 100%; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 15px; color: var(--primary); border-bottom: 2px solid var(--border); }
-        td { padding: 15px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
-        input[type="file"] { display: none; }
+        .sidebar { width: 350px; background: var(--side); display: flex; flex-direction: column; border-right: 1px solid #000; }
+        .side-head { padding: 15px; background: var(--header); display: flex; align-items: center; gap: 15px; border-bottom: 1px solid #0e161e; }
+        .chat-list { flex: 1; overflow-y: auto; }
+        .chat-item { display: flex; align-items: center; padding: 12px; cursor: pointer; gap: 12px; border-bottom: 1px solid #1c2833; }
+        .chat-item:hover { background: #202b36; }
+        .chat-item.active { background: var(--active); }
         
-        #countdown-timer { font-family: monospace; font-weight: bold; color: #00ffaa; margin-top: 5px; font-size: 0.8rem; text-align: center; display: block; }
+        .avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; font-weight: bold; overflow: hidden; flex-shrink: 0; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        main { flex: 1; display: flex; flex-direction: column; background: #0e161e; }
+        .main-head { height: 60px; background: var(--header); display: flex; align-items: center; padding: 0 20px; font-weight: bold; border-bottom: 1px solid #000; }
+        .messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .msg-bubble { max-width: 70%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; line-height: 1.4; position: relative; }
+        .msg-bubble.in { align-self: flex-start; background: var(--msg-in); color: #fff; }
+        .msg-bubble.out { align-self: flex-end; background: var(--msg-out); color: #fff; }
+        .time { font-size: 0.7rem; color: var(--hint); display: block; text-align: right; margin-top: 5px; }
+
+        .input-area { background: var(--side); padding: 15px; display: flex; align-items: center; gap: 10px; }
+        .input-area input { flex: 1; background: #242f3d; border: none; color: #fff; padding: 12px; border-radius: 10px; outline: none; }
+        .send-btn { color: var(--blue); font-size: 1.5rem; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="info-header">
-    <i class="fas fa-exclamation-triangle"></i> JIKA PESAN TIDAK MASUK: WAJIB KETIK /start DI DALAM GRUP ATAU CHAT PRIBADI BOT TERLEBIH DAHULU!
-</div>
-
-<div class="toggle-menu" onclick="toggleSidebar()">
-    <i class="fas fa-bars"></i>
-</div>
-
-<aside id="sidebar">
-    <div style="padding: 20px 10px; margin-bottom: 20px;">
-        <h2 style="font-weight: 900; color: #fff; font-size: 1.4rem;">XSANZ BOX</h2>
+<aside class="sidebar">
+    <div class="side-head">
+        <div class="avatar" id="botAvatar">X</div>
+        <div>
+            <h4 id="botName">XSANZ MASTER</h4>
+            <p style="font-size: 0.7rem; color: #00ff00;">● Online (Token Active)</p>
+        </div>
     </div>
-    <div class="nav-menu">
-        <div class="nav-link active" onclick="switchPage('dashboard', this)"><i class="fas fa-rocket"></i> Main Control</div>
-        <div class="nav-link" onclick="switchPage('history', this)"><i class="fas fa-database"></i> Database History</div>
-        <div class="nav-link" style="color: #ff4444; margin-top: 20px;" onclick="clearLocalStorage()"><i class="fas fa-trash"></i> WIPE STORAGE</div>
-    </div>
+    <div class="chat-list" id="chatList"></div>
+    <button onclick="clearHistory()" style="background: #ff4d4d; color: white; border: none; padding: 10px; cursor: pointer; font-weight: bold;">HAPUS SEMUA RIWAYAT</button>
 </aside>
 
 <main>
-    <div class="container-fluid">
-        <div id="dashboard" class="page active">
-            <div class="card-full">
-                <div class="section-title">Step 1: Content Payload</div>
-                <div class="upload-wide" onclick="document.getElementById('fileInp').click()">
-                    <i class="fas fa-file-upload" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
-                    <h3 id="fileText">Klik untuk Upload Gambar/Video Promosi</h3>
-                    <p style="color: var(--text-dim); margin-top: 5px;">File media utama broadcast</p>
-                </div>
-                <input type="file" id="fileInp" accept="image/*,video/*" onchange="document.getElementById('fileText').innerText = 'READY: ' + this.files[0].name">
-                
-                <div style="width:100%; background:#000; color:#00ffaa; border:1px solid var(--border); margin-top:15px; padding:15px; border-radius:12px; font-family:monospace; font-size:0.8rem;">
-                    LOCKED APK: <a href="https://www.mediafire.com/file/5rsolqaynt1ye8g/APK+JESEB+V2.apk/file" target="_blank" style="color: #00ffaa;">Link APK JASEB V2</a>
-                </div>
-                
-                <textarea id="caption" class="wide-editor" placeholder="Tulis caption marketing lo di sini (Support HTML)..."></textarea>
-                
-                <div class="action-group">
-                    <button class="btn-main btn-launch" onclick="launch()"><i class="fas fa-paper-plane"></i> LUNCURKAN KE TARGET DATABASE</button>
-                    <div>
-                        <button id="autoBtn" class="btn-main btn-auto" style="width: 100%;" onclick="toggleAuto()"><i class="fas fa-sync-alt"></i> MODE AUTO-JEDA (3m)</button>
-                        <span id="countdown-timer"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-full">
-                <div class="section-title">Step 2: Monitoring System & Auto-Responder</div>
-                <div id="logs" class="console-wide">
-                    <div>[SYSTEM] Ultra-Wide Interface Initialized...</div>
-                    <div id="db-count" style="color: #00d4ff;">[DATABASE] Loaded Targets: 0</div>
-                </div>
-            </div>
-        </div>
-
-        <div id="history" class="page">
-            <div class="card-full">
-                <div class="section-title">Broadcast Data Archive</div>
-                <div class="table-responsive">
-                    <table id="historyTable">
-                        <thead>
-                            <tr>
-                                <th>TIMESTAMP</th>
-                                <th>TARGET ID</th>
-                                <th>STATUS</th>
-                                <th>CONTENT TYPE</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <div class="main-head" id="activeChatName">Pilih chat untuk memulai...</div>
+    <div class="messages" id="msgContainer"></div>
+    <div class="input-area">
+        <input type="text" id="replyInput" placeholder="Tulis pesan..." onkeypress="if(event.key==='Enter')sendMsg()">
+        <i class="fas fa-paper-plane send-btn" onclick="sendMsg()"></i>
     </div>
 </main>
 
 <script>
-    const TOKEN = "8248357082:AAHSIbZaaw-GI-aSr_uKBy8fVa5Mhs_awDA";
-    const APK_FIXED = "https://www.mediafire.com/file/5rsolqaynt1ye8g/APK+JESEB+V2.apk/file";
-    const SUCCESS_TEXT = "🙌SELAMAT KAKA SUDAH MENDAPATKAN APK JASEB V2🙌";
-    const FAIL_TEXT = "<b>[MAAF KAK SYARAT BELUM DI PENUHI]</b>\n\nSilakan masukkan bot ke 2 grup dengan member 9+ baru klik DONE!";
+    // TOKEN HARCONDE MILIK YANG MULIA XSANZ
+    const BOT_TOKEN = "8343433110:AAFxN1Lb6t15KWeVcxtVZUkK0lfoxI3_YLc";
     
-    // SISTEM PENGUNCI MEMORI XSANZ (ARRAY BASED PERSISTENCE)
-    let targetDatabase = JSON.parse(localStorage.getItem('xsanz_v7_db')) || [];
-    let broadcastHistory = JSON.parse(localStorage.getItem('xsanz_v7_history')) || [];
-    let lastUpdateId = parseInt(localStorage.getItem('xsanz_v7_uid')) || 0;
-    
-    let autoActive = false;
-    let autoInterval = null;
-    let countdownInterval = null;
-    let remainingTime = 180;
+    // AMBIL RIWAYAT CHAT DARI LOCALSTORAGE BIAR GAK ILANG
+    let chats = JSON.parse(localStorage.getItem('xsanz_history')) || {}; 
+    let activeChatId = null;
 
-    // Fungsi Pengunci Data ke Perangkat
-    function saveToStorage() {
-        localStorage.setItem('xsanz_v7_db', JSON.stringify(targetDatabase));
-        localStorage.setItem('xsanz_v7_history', JSON.stringify(broadcastHistory));
-        localStorage.setItem('xsanz_v7_uid', lastUpdateId);
+    async function fetchUpdates() {
+        try {
+            const lastId = localStorage.getItem('xsanz_last_update') || 0;
+            const r = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${parseInt(lastId)+1}`);
+            const d = await r.json();
+            
+            if(d.ok && d.result.length > 0) {
+                for(let u of d.result) {
+                    localStorage.setItem('xsanz_last_update', u.update_id);
+                    const msg = u.message; if(!msg) continue;
+                    const cid = msg.chat.id;
+                    
+                    if(!chats[cid]) {
+                        chats[cid] = { name: msg.from.first_name || "User", msgs: [] };
+                    }
+                    
+                    chats[cid].msgs.push({ 
+                        type: 'in', 
+                        text: msg.text || "[Media/Sticker]", 
+                        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) 
+                    });
+                }
+                saveAndRender();
+            }
+        } catch(e) { console.error("Koneksi Error:", e); }
     }
 
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('hidden'); }
-    
-    function switchPage(pageId, element) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        element.classList.add('active');
-        if(pageId === 'history') renderHistoryTable();
+    function saveAndRender() {
+        localStorage.setItem('xsanz_history', JSON.stringify(chats));
+        renderChatList();
+        if(activeChatId) renderMessages();
     }
 
-    function writeLog(msg, color = "#0f0") {
-        const time = new Date().toLocaleTimeString();
-        const logs = document.getElementById('logs');
-        logs.innerHTML += `<div style="color: ${color}">[${time}] ${msg}</div>`;
-        logs.scrollTop = logs.scrollHeight;
-        document.getElementById('db-count').innerText = `[DATABASE] Loaded Targets: ${targetDatabase.length}`;
-    }
-
-    function addHistory(id, status, type) {
-        broadcastHistory.unshift({ time: new Date().toLocaleString(), id, status, type });
-        if(broadcastHistory.length > 100) broadcastHistory.pop();
-        saveToStorage();
-    }
-
-    function renderHistoryTable() {
-        const tbody = document.querySelector('#historyTable tbody');
-        tbody.innerHTML = broadcastHistory.map(h => `
-            <tr>
-                <td>${h.time}</td>
-                <td>${h.id}</td>
-                <td style="color:${h.status === 'OK' ? '#00ffaa' : '#ff4444'}">${h.status}</td>
-                <td>${h.type}</td>
-            </tr>
+    function renderChatList() {
+        const list = document.getElementById('chatList');
+        list.innerHTML = Object.keys(chats).reverse().map(id => `
+            <div class="chat-item ${activeChatId == id ? 'active' : ''}" onclick="selectChat('${id}')">
+                <div class="avatar">${chats[id].name[0]}</div>
+                <div style="flex:1; overflow:hidden;">
+                    <h4 style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${chats[id].name}</h4>
+                    <p style="font-size:0.8rem; color:var(--hint);">${id}</p>
+                </div>
+            </div>
         `).join('');
     }
 
-    async function botListener() {
+    function selectChat(id) {
+        activeChatId = id;
+        document.getElementById('activeChatName').innerText = "Chat dengan: " + chats[id].name;
+        renderChatList();
+        renderMessages();
+    }
+
+    function renderMessages() {
+        const container = document.getElementById('msgContainer');
+        const mList = chats[activeChatId].msgs;
+        container.innerHTML = mList.map(m => `
+            <div class="msg-bubble ${m.type}">
+                ${m.text}
+                <span class="time">${m.time}</span>
+            </div>
+        `).join('');
+        container.scrollTop = container.scrollHeight;
+    }
+
+    async function sendMsg() {
+        const inp = document.getElementById('replyInput');
+        if(!inp.value || !activeChatId) return;
+        
+        const text = inp.value;
         try {
-            const res = await fetch(`https://api.telegram.org/bot${TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=30`);
-            const data = await res.json();
-            if(data.ok && data.result.length > 0) {
-                for(let u of data.result) {
-                    lastUpdateId = u.update_id;
-                    const pid = u.message?.chat.id || u.callback_query?.from.id || u.my_chat_member?.chat.id;
-                    
-                    if(pid && !targetDatabase.includes(pid)) {
-                        targetDatabase.push(pid);
-                        writeLog(`[NEW TARGET] ID: ${pid} Locked to Memory!`, "yellow");
-                    }
-
-                    if(u.message && u.message.text === '/start') sendInstruction(u.message.chat.id);
-                    if(u.callback_query && u.callback_query.data === 'verify_grup') verifyGrup(u.callback_query);
-                }
-                saveToStorage(); // Kunci ke storage setiap ada update
+            const r = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ chat_id: activeChatId, text: text })
+            });
+            
+            if(r.ok) {
+                chats[activeChatId].msgs.push({ 
+                    type: 'out', 
+                    text: text, 
+                    time: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) 
+                });
+                inp.value = "";
+                saveAndRender();
             }
-        } catch(e) {}
-        setTimeout(botListener, 2000);
+        } catch(e) { alert("Gagal kirim pesan!"); }
     }
 
-    async function sendInstruction(chatId) {
-        const text = "<b>⚠️ AKSES TERBATAS!</b>\n\nSilakan masukkan Bot ini ke <b>2 GRUP</b> berbeda (member 9+).\n\nKlik <b>DONE</b> untuk link APK.";
-        const kb = { inline_keyboard: [[{ text: "✅ DONE", callback_data: "verify_grup" }]] };
-        await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: 'HTML', reply_markup: kb })
-        });
-    }
-
-    async function verifyGrup(cb) {
-        const chatId = cb.from.id;
-        // ... (Logika Verifikasi Tetap Sama)
-        // Kirim Fail/Success Text sesuai input user
-    }
-
-    async function launch() {
-        const file = document.getElementById('fileInp').files[0];
-        const caption = document.getElementById('caption').value;
-        if(!caption || targetDatabase.length === 0) return alert("Cek Caption/Database!");
-
-        writeLog(`MENGGEMPUR ${targetDatabase.length} TARGET...`, "cyan");
-        for(const id of targetDatabase) {
-            const fd = new FormData();
-            fd.append('chat_id', id);
-            fd.append('caption', caption);
-            fd.append('parse_mode', 'HTML');
-            let method = file ? (file.type.startsWith('image/') ? "sendPhoto" : "sendVideo") : "sendMessage";
-            if(file) fd.append(file.type.startsWith('image/') ? 'photo' : 'video', file);
-            else fd.append('text', caption);
-
-            try {
-                const send = await fetch(`https://api.telegram.org/bot${TOKEN}/${method}`, { method: 'POST', body: fd });
-                const res = await send.json();
-                addHistory(id, res.ok ? 'OK' : 'FAIL', method);
-                writeLog(`${res.ok ? 'OK' : 'FAIL'}: ${id}`, res.ok ? "#00ffaa" : "red");
-            } catch(e) {}
-            await new Promise(r => setTimeout(r, 800));
+    function clearHistory() {
+        if(confirm("Hapus semua riwayat chat Mulia XSANZ?")) {
+            localStorage.removeItem('xsanz_history');
+            chats = {};
+            location.reload();
         }
     }
 
-    function toggleAuto() {
-        const btn = document.getElementById('autoBtn');
-        if(!autoActive) {
-            autoActive = true; btn.classList.add('active');
-            btn.innerHTML = `<i class="fas fa-pause"></i> STOP AUTO-PILOT`;
-            launch(); remainingTime = 180;
-            autoInterval = setInterval(launch, 180000);
-            countdownInterval = setInterval(() => {
-                remainingTime--;
-                document.getElementById('countdown-timer').innerText = `NEXT: ${Math.floor(remainingTime/60)}:${(remainingTime%60).toString().padStart(2,'0')}`;
-                if(remainingTime <= 0) remainingTime = 180;
-            }, 1000);
-        } else {
-            autoActive = false; btn.classList.remove('active');
-            btn.innerHTML = `<i class="fas fa-sync-alt"></i> MODE AUTO-JEDA (3m)`;
-            clearInterval(autoInterval); clearInterval(countdownInterval);
-            document.getElementById('countdown-timer').innerText = "";
-        }
-    }
-
-    function clearLocalStorage() {
-        if(confirm("WIPE DATA PERMANEN?")) { localStorage.clear(); location.reload(); }
-    }
-
-    window.onload = () => {
-        writeLog(`DATABASE LOADED: ${targetDatabase.length} TARGETS`, "cyan");
-        botListener();
-    };
+    // Jalankan sistem
+    renderChatList();
+    setInterval(fetchUpdates, 2500); // Scan chat tiap 2.5 detik
 </script>
 </body>
 </html>
